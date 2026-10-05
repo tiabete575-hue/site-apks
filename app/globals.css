@@ -9,3 +9,47 @@ html { background: var(--background); }
 body { margin: 0; background: radial-gradient(circle at 12% 0%, rgba(53,232,145,.08), transparent 29rem), var(--background); color: var(--foreground); font-family: "Segoe UI", Inter, system-ui, sans-serif; }
 button, input { font: inherit; }
 ::selection { background: rgba(53,232,145,.28); }
+
+/* Página pública compatível com navegadores antigos de TV Box.
+   Estas regras não dependem do Tailwind, cascade layers, grid ou JavaScript. */
+.tv-page { min-height: 100vh; background: #090b10; color: #f7f9f8; font-family: Arial, Helvetica, sans-serif; }
+.tv-shell { width: 92%; max-width: 1120px; margin: 0 auto; }
+.tv-header { border-bottom: 1px solid #252932; background: #090b10; }
+.tv-header-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; }
+.tv-brand { display: flex; align-items: center; }
+.tv-logo { display: inline-block; width: 46px; height: 46px; margin-right: 13px; border-radius: 14px; background: #35e891; color: #06140d; font-size: 18px; line-height: 46px; text-align: center; }
+.tv-brand strong, .tv-brand small { display: block; }
+.tv-brand strong { font-size: 19px; line-height: 24px; }
+.tv-brand small { color: #90959e; font-size: 13px; line-height: 19px; }
+.tv-verified { color: #a7adb6; font-size: 15px; }
+.tv-content { padding-top: 52px; padding-bottom: 60px; }
+.tv-intro { position: relative; padding-bottom: 36px; margin-bottom: 32px; border-bottom: 1px solid #252932; }
+.tv-kicker { display: inline-block; margin-bottom: 18px; padding: 7px 12px; border: 1px solid #216c4a; border-radius: 18px; background: #10281e; color: #5aeca4; font-size: 12px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+.tv-intro h1 { max-width: 760px; margin: 0; color: #ffffff; font-size: 52px; line-height: 56px; letter-spacing: -2px; }
+.tv-intro h1 em { color: #858a93; font-style: normal; }
+.tv-intro p { max-width: 690px; margin: 20px 0 24px; color: #a0a5ae; font-size: 18px; line-height: 28px; }
+.tv-refresh { display: inline-block; padding: 11px 16px; border: 1px solid #343945; border-radius: 10px; background: #151820; color: #e8eaed; font-size: 15px; font-weight: bold; text-decoration: none; }
+.tv-grid { display: flex; flex-wrap: wrap; margin: -8px; }
+.tv-card { position: relative; width: 31%; min-width: 245px; margin: 8px; padding: 25px; border: 1px solid #292e38; border-radius: 22px; background: #11141b; }
+.tv-card-number { position: absolute; top: 22px; right: 22px; color: #4d535d; font-size: 13px; font-weight: bold; }
+.tv-package { width: 52px; height: 52px; margin-bottom: 28px; border: 1px solid #304b40; border-radius: 15px; background: #17251f; color: #5aeca4; font-size: 13px; font-weight: bold; line-height: 52px; text-align: center; }
+.tv-card h2 { min-height: 52px; margin: 0; padding-right: 25px; overflow-wrap: break-word; color: #ffffff; font-size: 22px; line-height: 27px; }
+.tv-card p { margin: 12px 0 24px; color: #858b95; font-size: 13px; }
+.tv-card p span { padding: 0 4px; }
+.tv-download { display: block; padding: 15px 12px; border-radius: 11px; background: #35e891; color: #06140d; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; }
+.tv-message { padding: 38px 28px; border: 1px dashed #343945; border-radius: 20px; background: #101319; text-align: center; }
+.tv-message strong, .tv-message span { display: block; }
+.tv-message strong { margin-bottom: 8px; font-size: 21px; }
+.tv-message span { color: #979ca5; font-size: 15px; }
+.tv-message-error { border-style: solid; border-color: #61353a; background: #221417; color: #ffd5d9; }
+
+@media (max-width: 760px) {
+  .tv-shell { width: auto; margin: 0; padding-left: 22px; padding-right: 22px; }
+  .tv-header-inner { min-height: 70px; }
+  .tv-verified { display: none; }
+  .tv-content { padding-top: 34px; }
+  .tv-intro h1 { font-size: 38px; line-height: 42px; letter-spacing: -1px; }
+  .tv-intro p { font-size: 16px; line-height: 24px; }
+  .tv-grid { display: block; margin: 0; }
+  .tv-card { width: auto; min-width: 0; margin: 0 0 14px; }
+}
