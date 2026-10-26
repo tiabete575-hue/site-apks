@@ -46,3 +46,5 @@ site-archive.tar.gz
 /outputs/
 /work/
 .neon
+
+/.vercel/

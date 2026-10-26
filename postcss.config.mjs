@@ -1,7 +1,5 @@
 const config = {
-  plugins: {
-    "@tailwindcss/postcss": {},
-  },
+  plugins: process.env.VERCEL === "1" ? {} : { "@tailwindcss/postcss": {} },
 };
 
 export default config;
