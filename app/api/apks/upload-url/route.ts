@@ -17,6 +17,7 @@ const CONTENT_TYPES: Record<string, string> = {
   zip: "application/zip",
   rar: "application/vnd.rar",
   "7z": "application/x-7z-compressed",
+  config: "application/octet-stream",
 };
 
 function getClient() {
@@ -57,7 +58,7 @@ export async function POST(request: Request) {
     const extension = body.name.split(".").pop()?.toLowerCase() ?? "";
     const contentType = CONTENT_TYPES[extension];
     if (!contentType) {
-      return Response.json({ error: "Formato não permitido. Use APK, PDF, Office, TXT, CSV, ZIP, RAR ou 7Z." }, { status: 400 });
+      return Response.json({ error: "Formato não permitido. Use APK, PDF, Office, TXT, CSV, CONFIG, ZIP, RAR ou 7Z." }, { status: 400 });
     }
     if (
       typeof body.size !== "number" &&

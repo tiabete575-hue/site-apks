@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 type DownloadFile = { key: string; name: string; size: number; updatedAt: string; url: string; type: string };
 
 const SUPPORTED_EXTENSIONS = new Set([
-  "apk", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "csv", "zip", "rar", "7z",
+  "apk", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "csv", "zip", "rar", "7z", "config",
 ]);
 
 function getClient() {

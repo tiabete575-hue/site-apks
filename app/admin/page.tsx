@@ -21,7 +21,7 @@ type ApiResult = {
   headers?: Record<string, string>;
 };
 
-const ACCEPTED_FILES = ".apk,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.7z";
+const ACCEPTED_FILES = ".apk,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.7z,.config";
 
 function formatSize(bytes: number) {
   if (!bytes) return "Tamanho indisponível";

@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 const BUCKET = "apks";
 const SUPPORTED_EXTENSIONS = new Set([
-  "apk", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "csv", "zip", "rar", "7z",
+  "apk", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "csv", "zip", "rar", "7z", "config",
 ]);
 
 type StoredFile = {
