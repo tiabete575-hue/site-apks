@@ -16,13 +16,31 @@ export default function AdminPage() {
     setMessage("");
     const data = new FormData();
     data.set("password", password);
-    data.set("file", file);
+    data.set("name", file.name);
+    data.set("size", String(file.size));
     try {
-      const response = await fetch("/api/apks", { method: "POST", body: data });
-      const result = (await response.json()) as { error?: string; name?: string };
-      if (!response.ok) throw new Error(result.error ?? "Falha no envio.");
+      const response = await fetch("/api/apks/upload-url", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(data)),
+      });
+      const result = (await response.json().catch(() => null)) as
+        | { error?: string; name?: string; uploadUrl?: string; headers?: Record<string, string> }
+        | null;
+      if (!response.ok || !result?.uploadUrl || !result.headers) {
+        throw new Error(result?.error ?? `Não foi possível iniciar o envio (${response.status}).`);
+      }
+
+      const uploadResponse = await fetch(result.uploadUrl, {
+        method: "PUT",
+        headers: result.headers,
+        body: file,
+      });
+      if (!uploadResponse.ok) {
+        throw new Error(`O armazenamento recusou o arquivo (${uploadResponse.status}).`);
+      }
       setStatus("success");
-      setMessage(`${result.name} foi publicado com sucesso.`);
+      setMessage(`${result.name ?? file.name} foi publicado com sucesso.`);
       setFile(null);
       const input = document.getElementById("apk-file") as HTMLInputElement | null;
       if (input) input.value = "";
