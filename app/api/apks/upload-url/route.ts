@@ -3,7 +3,21 @@ import { AwsClient } from "aws4fetch";
 export const dynamic = "force-dynamic";
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024;
-const APK_CONTENT_TYPE = "application/vnd.android.package-archive";
+const CONTENT_TYPES: Record<string, string> = {
+  apk: "application/vnd.android.package-archive",
+  pdf: "application/pdf",
+  doc: "application/msword",
+  docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  xls: "application/vnd.ms-excel",
+  xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  ppt: "application/vnd.ms-powerpoint",
+  pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  txt: "text/plain; charset=utf-8",
+  csv: "text/csv; charset=utf-8",
+  zip: "application/zip",
+  rar: "application/vnd.rar",
+  "7z": "application/x-7z-compressed",
+};
 
 function getClient() {
   const region = process.env.AWS_REGION;
@@ -37,11 +51,13 @@ export async function POST(request: Request) {
       return Response.json({ error: "Senha de administrador inválida." }, { status: 401 });
     }
 
-    if (
-      typeof body.name !== "string" ||
-      !body.name.toLowerCase().endsWith(".apk")
-    ) {
-      return Response.json({ error: "Selecione um arquivo com extensão .apk." }, { status: 400 });
+    if (typeof body.name !== "string" || body.name.trim().length === 0) {
+      return Response.json({ error: "Selecione um arquivo válido." }, { status: 400 });
+    }
+    const extension = body.name.split(".").pop()?.toLowerCase() ?? "";
+    const contentType = CONTENT_TYPES[extension];
+    if (!contentType) {
+      return Response.json({ error: "Formato não permitido. Use APK, PDF, Office, TXT, CSV, ZIP, RAR ou 7Z." }, { status: 400 });
     }
     if (
       typeof body.size !== "number" &&
@@ -57,7 +73,7 @@ export async function POST(request: Request) {
     const safeName = body.name.replace(/[^a-zA-Z0-9._()\- ]/g, "-");
     const key = `apks/${Date.now()}--${encodeURIComponent(safeName)}`;
     const headers = {
-      "Content-Type": APK_CONTENT_TYPE,
+      "Content-Type": contentType,
       "Content-Disposition": `attachment; filename="${safeName.replace(/"/g, "")}"`,
       "Cache-Control": "public, max-age=31536000, immutable",
     };
